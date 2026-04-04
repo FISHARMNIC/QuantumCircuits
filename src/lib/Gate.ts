@@ -1,5 +1,4 @@
-import { i, MathMatrix, matrix, minus_i, multiply, to_complex, type Complex, type ComplexMatrix } from "./Math.js";
-import { Qubit } from "./Qubit.js";
+import { MathMatrix, matrix, to_complex, type Complex, type ComplexMatrix } from "./Math.js";
 
 export class Gate {
     operation: ComplexMatrix;

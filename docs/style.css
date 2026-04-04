@@ -1,6 +1,11 @@
+:root {
+    --wid: calc(80vw);
+}
+
 table {
+    margin-top: 20px;
     border-collapse: collapse;
-    width: calc(80px * 8 + 40px);
+    /* width: var(--wid); */
 }
 td {
     width: 80px;
@@ -11,6 +16,7 @@ td {
     position: relative;
     background-color: white;
     transition: 100ms;
+    box-sizing: border-box;
 }
 
 td:hover {
@@ -60,7 +66,7 @@ button {
     border: 1px solid #aaa;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 20px;
     transition: 100ms;
 }
 
@@ -107,12 +113,50 @@ button:hover {
     background-color: lightblue;
     padding: 15px;
     border-radius: 10px;
-    width: calc(80px * 8 + 40px); 
+    width: var(--wid); 
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: scroll;
 }
 
 .two {
     background-color: lightgrey;
+        font-size: x-large !important;
+}
+
+.valid {
+    background-color: lightgreen !important;
+}
+
+.infot {
+    position: relative;
+    top: -27px;
+}
+
+.grid-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    background-color: lightblue;
+    justify-content: center;
+    padding: 10px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-radius: 10px;
+}
+
+.row-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 12px;
+    justify-content: center;
+    align-self: center;
+    background-color: bisque;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
 }

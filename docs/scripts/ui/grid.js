@@ -1,21 +1,22 @@
 import { Gates } from "../lib/GateExports.js";
 import { buttons, grid } from "../lib/Html.js";
-import { gatNameToId, uiClick, uiHandleRemove } from "./interaction.js";
+import { gatNameToId, uiClick, uiHandleRemove, uiRun } from "./interaction.js";
 export let gridSize = {
-    width: 8,
+    width: Math.round(window.innerWidth / 110),
     height: 3
 };
-const rowStates = [];
+export const rowStates = [];
 export const ketToId = (y) => `ket_id_${y}`;
 const makeKetCell = (y) => {
     const ket = document.createElement('td');
     ket.className = 'ket';
     rowStates[y] = rowStates[y] ?? 0;
-    ket.textContent = `|${rowStates[y]}⟩`;
+    ket.textContent = `(${y}) |${rowStates[y]}⟩`;
     ket.id = ketToId(y);
     ket.onclick = () => {
         rowStates[y] = rowStates[y] === 0 ? 1 : 0;
-        ket.textContent = `|${rowStates[y]}⟩`;
+        ket.textContent = `(${y}) |${rowStates[y]}⟩`;
+        uiRun();
     };
     return ket;
 };
@@ -39,7 +40,7 @@ const addRow = () => {
     gridSize.height++;
 };
 const removeRow = () => {
-    if (grid.rows.length > 0) {
+    if (grid.rows.length > 1) {
         gridSize.height--;
         uiHandleRemove();
         grid.deleteRow(-1);

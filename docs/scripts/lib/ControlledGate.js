@@ -1,7 +1,5 @@
 import { Gate } from "./Gate.js";
-import { multiply } from "./Math.js";
-import { Qubit } from "./Qubit.js";
-import { TensorProduct } from "./Tensor.js";
+import {} from "./Math.js";
 export class ControlledGate {
     gate;
     constructor(operation) {

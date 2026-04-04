@@ -2,13 +2,13 @@ import { BinaryArray } from "../lib/Binary.js";
 import { Circuit } from "../lib/Circuit.js";
 import { ControlledGate } from "../lib/ControlledGate.js";
 import { Gates } from "../lib/GateExports.js";
-import { outputClear } from "../lib/Html.js";
+import { genDot, outputClear } from "../lib/Html.js";
 import { State } from "../lib/State.js";
-import { gridSize, ketToId, xyToGridId } from "./grid.js";
+import { gridSize, rowStates, xyToGridId } from "./grid.js";
 export let activeGate = null;
 export const gatNameToId = (name) => `gate_${name}`;
 let nextClickIsControl = 0;
-let target = 0;
+let target = { x: 0, y: 0 };
 let control1 = 0;
 const uiSetActiveGate = (name) => {
     const gate = Gates[name];
@@ -26,52 +26,69 @@ const uiClearActiveGate = () => {
     }
 };
 const allGates = {};
+const mark_valids = (clear = false) => {
+    for (let i = 0; i < gridSize.height; i++) {
+        document.getElementById(xyToGridId(target.x, i)).classList[clear ? 'remove' : 'add']('valid');
+    }
+};
 export const uiClick = (x, y) => {
     const el = document.getElementById(xyToGridId(x, y));
+    const gate = Gates[activeGate];
     if (nextClickIsControl) // selecting control
      {
-        const gate = Gates[activeGate];
-        el.innerHTML = `<div class="dot"></div><hr>`;
         if (nextClickIsControl == 2) // selecting second control
          {
-            const info = {
-                gate,
-                target,
-                control: control1,
-                control2: y
-            };
-            allGates[xyToGridId(x, target)] = { time: x + 1, info };
-            nextClickIsControl = 0;
-            console.log({ time: x + 1, info });
-        }
-        else // selecting target
-         {
-            const isTuffoli = prompt('Tuffoli? (y/n)', 'y') == 'y';
-            if (isTuffoli) // user wants second control
-             {
-                nextClickIsControl = 2;
-                control1 = y;
+            if (target.x != x) {
+                alert('Please select the same time instance (shown in green');
             }
-            else // user wants one control
-             {
+            else {
+                mark_valids(true);
+                el.innerHTML = genDot(target.y);
                 const info = {
                     gate,
-                    target,
-                    control: y
+                    target: target.y,
+                    control: control1,
+                    control2: y
                 };
-                allGates[xyToGridId(x, target)] = { time: x + 1, info };
+                allGates[xyToGridId(x, target.y)] = { time: x + 1, info };
                 nextClickIsControl = 0;
-                console.log({ time: x + 1, info });
+            }
+        }
+        else // selecting target.y
+         {
+            if (target.x != x) {
+                alert('Please select the same time instance (shown in green');
+            }
+            else {
+                el.innerHTML = genDot(target.y);
+                const isTuffoli = prompt('Tuffoli? (y/n)', 'y') == 'y';
+                if (isTuffoli) // user wants second control
+                 {
+                    nextClickIsControl = 2;
+                    control1 = y;
+                }
+                else // user wants one control
+                 {
+                    mark_valids(true);
+                    const info = {
+                        gate,
+                        target: target.y,
+                        control: y
+                    };
+                    allGates[xyToGridId(x, target.y)] = { time: x + 1, info };
+                    nextClickIsControl = 0;
+                }
             }
         }
     }
     else {
         if (activeGate) {
             el.innerHTML = `<div class="box">${activeGate[0]}</div><hr>`;
-            const gate = Gates[activeGate];
             if (gate instanceof ControlledGate) {
                 nextClickIsControl = 1;
-                target = y;
+                target.y = y;
+                target.x = x;
+                mark_valids();
             }
             else {
                 const info = {
@@ -90,11 +107,8 @@ export const uiClick = (x, y) => {
 };
 export const uiRun = () => {
     console.log(allGates);
-    const arr = [];
-    for (let i = 0; i < gridSize.height; i++) {
-        arr.push(parseInt(document.getElementById(ketToId(i)).textContent[1]));
-    }
-    const input = new State(new BinaryArray(arr));
+    ;
+    const input = new State(new BinaryArray(rowStates));
     const circuit = new Circuit(input);
     for (const gate of Object.values(allGates)) {
         if (gate) {

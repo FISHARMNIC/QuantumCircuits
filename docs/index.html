@@ -14,7 +14,13 @@
 
 <body>
 
-    <table id="grid"></table>
+    <div class="grid-container">
+        <table id="grid"></table>
+        <div class="row-controls">
+            <button onclick="_addRow()">+</button>
+            <button onclick="_removeRow()">-</button>
+        </div>
+    </div>
 
     <br>
 
@@ -23,17 +29,11 @@
     <br>
 
     <div class="wrapper">
-    <button onclick="_addRow()">Add Row</button> 
-    <button onclick="_removeRow()">Remove Row</button>
-    </div>
-
-    <br>
-
-    <div class="wrapper">
-    <button onclick="_uiRun()" >Run</button>
+        <button onclick="_uiRun()">Run</button>
     </div>
 
     <pre id="output" class="wrapper two">Waiting...</pre>
+
 </body>
 
 </html>

@@ -1,7 +1,5 @@
 import { Gate } from "./Gate.js";
-import { multiply, type Complex, type ComplexMatrix } from "./Math.js";
-import { Qubit } from "./Qubit.js";
-import { TensorProduct } from "./Tensor.js";
+import { type Complex, type ComplexMatrix } from "./Math.js";
 
 export class ControlledGate
 {

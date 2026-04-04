@@ -2,7 +2,7 @@ import { ControlledGate } from "./ControlledGate.js";
 import { Gate } from "./Gate.js";
 import { UtilGates } from "./GateExports.js";
 import { outputWrite } from "./Html.js";
-import { add, multiply } from "./Math.js";
+import { add, identity, multiply, subtract } from "./Math.js";
 import { State } from "./State.js";
 import { TensorProduct } from "./Tensor.js";
 export class Circuit {
@@ -56,42 +56,37 @@ export class Circuit {
             return new State(res.toArray());
         }
         else if (gate instanceof ControlledGate) {
-            const control = gateInfo.control;
-            const control2 = gateInfo.control2;
-            const isToffoli = control2 != undefined;
-            const P0 = UtilGates.ZeroProjector.operation;
-            const P1 = UtilGates.OneProjector.operation;
             /*
             Similar idea as above
             
-            Identity when control is 0
-            Operator on bit when control is 1
-            Troffoli: both must be 1
-
-            End combines both
+            I - (Do nothing behavior) + (Do something behavior)
+                -> if not (c1 and c2) then just identity
+                -> if c1 (and c2) then remove identity and replace with gate operation
             */
-            let zeroPart = control == 0 ? P0 : UtilGates.IdentityGate.operation;
+            const control = gateInfo.control;
+            const control2 = gateInfo.control2;
+            const isToffoli = control2 != undefined;
+            const P1 = UtilGates.OneProjector.operation;
+            const isControl = (i) => i == control || (isToffoli && i == control2);
+            const seedI = isControl(0) ? P1 : UtilGates.IdentityGate.operation;
+            let controlWithI = seedI;
+            let controlWithGate = seedI;
             for (let i = 1; i < numQubits; i++) {
-                if (i == control) {
-                    zeroPart = TensorProduct(zeroPart, P0);
-                }
-                else {
-                    zeroPart = TensorProduct(zeroPart, UtilGates.IdentityGate.operation);
-                }
-            }
-            let onePart = control == 0 ? P1 : UtilGates.IdentityGate.operation;
-            for (let i = 1; i < numQubits; i++) {
-                if ((i == control) || (isToffoli && i == control2)) {
-                    onePart = TensorProduct(onePart, P1);
+                if (isControl(i)) {
+                    controlWithI = TensorProduct(controlWithI, P1);
+                    controlWithGate = TensorProduct(controlWithGate, P1);
                 }
                 else if (i == target) {
-                    onePart = TensorProduct(onePart, gate.gate.operation);
+                    controlWithI = TensorProduct(controlWithI, UtilGates.IdentityGate.operation);
+                    controlWithGate = TensorProduct(controlWithGate, gate.gate.operation);
                 }
                 else {
-                    onePart = TensorProduct(onePart, UtilGates.IdentityGate.operation);
+                    controlWithI = TensorProduct(controlWithI, UtilGates.IdentityGate.operation);
+                    controlWithGate = TensorProduct(controlWithGate, UtilGates.IdentityGate.operation);
                 }
             }
-            fullGate = add(zeroPart, onePart);
+            const identityFull = identity(2 ** numQubits);
+            fullGate = add(subtract(identityFull, controlWithI), controlWithGate);
             const res = multiply(fullGate, currentState.vector);
             return new State(res.toArray());
         }
@@ -112,6 +107,7 @@ export class Circuit {
                 const activeGates = this.gates[time];
                 for (const gateInfo of activeGates) {
                     currentState = this.computeGate(currentState, gateInfo);
+                    console.log(currentState);
                 }
             }
         }
