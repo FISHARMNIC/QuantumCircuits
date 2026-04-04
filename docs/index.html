@@ -14,7 +14,7 @@
 
 <body>
 
-    <div class="grid-container">
+    <div class="wrapper" style="padding-bottom: 50px; margin-bottom: 10px;">
         <table id="grid"></table>
         <div class="row-controls">
             <button onclick="_addRow()">+</button>
@@ -28,12 +28,29 @@
 
     <br>
 
-    <div class="wrapper">
+    <!-- <div class="wrapper">
         <button onclick="_uiRun()">Run</button>
-    </div>
+    </div> -->
 
     <pre id="output" class="wrapper two">Waiting...</pre>
 
+  
+    <h2>Example Circuits:</h2>
+    <div class="wrapper">
+          
+        <figure>
+            <img src="images/adder.png">
+            <figcaption>Full Adder</figcaption>
+        </figure>
+        <figure>
+            <img src="images/adder2.png">
+            <figcaption>Half Adder</figcaption>
+        </figure>
+        <figure>
+            <img src="images/bell-state.png">
+            <figcaption>Bell State</figcaption>
+        </figure>
+    </div>
 </body>
 
 </html>

@@ -113,16 +113,20 @@ button:hover {
     background-color: lightblue;
     padding: 15px;
     border-radius: 10px;
-    width: var(--wid); 
+    width: var(--wid);
+    max-width: var(--wid);
+    box-sizing: border-box;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: scroll;
+    /* align-items: center; */
+    justify-content: flex-start; /* was center */
+    gap: 20px;
+    overflow-x: auto;
 }
 
 .two {
     background-color: lightgrey;
         font-size: x-large !important;
+        margin-top: 30px;
 }
 
 .valid {
@@ -159,4 +163,20 @@ button:hover {
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 10px;
+}
+
+h2, figcaption
+{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+
+img {
+    /* width: 500px; */
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+figure {
+    text-align: center;
 }

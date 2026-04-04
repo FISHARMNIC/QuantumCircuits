@@ -52,6 +52,7 @@ export const uiClick = (x, y) => {
                 };
                 allGates[xyToGridId(x, target.y)] = { time: x + 1, info };
                 nextClickIsControl = 0;
+                // uiRun();
             }
         }
         else // selecting target.y
@@ -77,6 +78,7 @@ export const uiClick = (x, y) => {
                     };
                     allGates[xyToGridId(x, target.y)] = { time: x + 1, info };
                     nextClickIsControl = 0;
+                    uiRun();
                 }
             }
         }
@@ -97,6 +99,7 @@ export const uiClick = (x, y) => {
                 };
                 console.log({ time: x + 1, info });
                 allGates[xyToGridId(x, y)] = { time: x + 1, info };
+                // uiRun();
             }
         }
         else {
@@ -121,7 +124,9 @@ export const uiRun = () => {
 };
 export const uiHandleRemove = () => {
     Object.entries(allGates).forEach(e => {
-        const k = e[0];
+        if (!e[0] || !e[1]) {
+            return;
+        }
         const v = e[1];
         const target_vio = v.info.target >= gridSize.height;
         const c1_exists = v.info.control != undefined;
@@ -148,3 +153,4 @@ window._uiSetActiveGate = uiSetActiveGate;
 window._uiClearActiveGate = uiClearActiveGate;
 // @ts-ignore
 window._uiRun = uiRun;
+window.onclick = uiRun;

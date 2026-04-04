@@ -21,7 +21,7 @@ const makeKetCell = (y: number): HTMLTableCellElement => {
     ket.onclick = () => {
         rowStates[y] = rowStates[y] === 0 ? 1 : 0;
         ket.textContent = `(${y}) |${rowStates[y]}⟩`;
-        uiRun();
+        // uiRun();
     };
     return ket;
 };
@@ -51,6 +51,7 @@ const makeRow = (y: number): HTMLTableRowElement => {
 const addRow = () => {
     grid.appendChild(makeRow(gridSize.height));
     gridSize.height++;
+    // uiRun();
 };
 
 const removeRow = () => {
@@ -59,6 +60,7 @@ const removeRow = () => {
         uiHandleRemove();
         grid.deleteRow(-1);
         rowStates.splice(gridSize.height, 1);
+        // uiRun();
     }
 };
 
