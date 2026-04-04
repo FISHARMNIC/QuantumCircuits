@@ -1,6 +1,6 @@
 import type { Bit } from "../lib/Binary.js";
 import { Gates } from "../lib/GateExports.js";
-import { buttons, grid } from "../lib/Html.js";
+import { buttons, formatKet, grid } from "../lib/Html.js";
 import { gatNameToId, uiClick, uiHandleRemove, uiRun } from "./interaction.js";
 
 export let gridSize = {
@@ -16,11 +16,11 @@ const makeKetCell = (y: number): HTMLTableCellElement => {
     const ket = document.createElement('td');
     ket.className = 'ket';
     rowStates[y] = rowStates[y] ?? 0;
-    ket.textContent = `(${y}) |${rowStates[y]}⟩`;
+    ket.innerHTML = formatKet(y, rowStates[y]);
     ket.id = ketToId(y); 
     ket.onclick = () => {
         rowStates[y] = rowStates[y] === 0 ? 1 : 0;
-        ket.textContent = `(${y}) |${rowStates[y]}⟩`;
+        ket.innerHTML = formatKet(y, rowStates[y]);
         // uiRun();
     };
     return ket;

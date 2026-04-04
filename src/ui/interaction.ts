@@ -55,7 +55,7 @@ export const uiClick = (x: number, y: number): void => {
         {
 
             if (target.x != x) {
-                alert('Please select the same time instance (shown in green');
+                alert('Please select the same time instance (shown in green)');
             }
 
             else {
@@ -79,7 +79,7 @@ export const uiClick = (x: number, y: number): void => {
         else // selecting target.y
         {
             if (target.x != x) {
-                alert('Please select the same time instance (shown in green');
+                alert('Please select the same time instance (shown in green)');
             }
 
             else {

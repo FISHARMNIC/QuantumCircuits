@@ -45,10 +45,15 @@ td.ket {
     user-select: none;
     background-color: transparent;
     padding: 0;
+    background-color: #eee;
+
+    border: 1px solid black;
+    /* border-radius: 15px; */
+
 }
 
 td.ket:hover {
-    background-color: #eee;
+    background-color: gray;
     transform: none;
 }
 
@@ -179,4 +184,18 @@ img {
 
 figure {
     text-align: center;
+}
+
+.tiny {
+    font-size: small;
+    position: relative;
+    left: 5px;
+    top: -35px;
+}
+
+.large {
+    font-size: xx-large;
+    position: relative;
+    left: -5px;
+    top: 0px;
 }

@@ -39,7 +39,7 @@ export const uiClick = (x, y) => {
         if (nextClickIsControl == 2) // selecting second control
          {
             if (target.x != x) {
-                alert('Please select the same time instance (shown in green');
+                alert('Please select the same time instance (shown in green)');
             }
             else {
                 mark_valids(true);
@@ -58,7 +58,7 @@ export const uiClick = (x, y) => {
         else // selecting target.y
          {
             if (target.x != x) {
-                alert('Please select the same time instance (shown in green');
+                alert('Please select the same time instance (shown in green)');
             }
             else {
                 el.innerHTML = genDot(target.y);
