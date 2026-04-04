@@ -1,5 +1,6 @@
 import { ControlledGate } from "./ControlledGate.js";
-import { Gate, IdentityGate, OneProjector, ZeroProjector } from "./Gate.js";
+import { Gate } from "./Gate.js";
+import { UtilGates } from "./GateExports.js";
 import { outputWrite } from "./Html.js";
 import { add, multiply } from "./Math.js";
 import { State } from "./State.js";
@@ -29,7 +30,7 @@ export class Circuit {
     computeGate(currentState, gateInfo) {
         const { gate, target } = gateInfo;
         const numQubits = currentState.numQubits;
-        let fullGate = IdentityGate.operation;
+        let fullGate = UtilGates.IdentityGate.operation;
         if (gate instanceof Gate) {
             // Constructs Identity matrix with operation in the middle to operate only on the desired bit
             /*
@@ -44,12 +45,12 @@ export class Circuit {
             }
             else {
                 for (let i = 1; i < target; i++) {
-                    fullGate = TensorProduct(fullGate, IdentityGate.operation);
+                    fullGate = TensorProduct(fullGate, UtilGates.IdentityGate.operation);
                 }
                 fullGate = TensorProduct(fullGate, gate.operation);
             }
             for (let i = target + 1; i < numQubits; i++) {
-                fullGate = TensorProduct(fullGate, IdentityGate.operation);
+                fullGate = TensorProduct(fullGate, UtilGates.IdentityGate.operation);
             }
             const res = multiply(fullGate, currentState.vector);
             return new State(res.toArray());
@@ -58,8 +59,8 @@ export class Circuit {
             const control = gateInfo.control;
             const control2 = gateInfo.control2;
             const isToffoli = control2 != undefined;
-            const P0 = ZeroProjector.operation;
-            const P1 = OneProjector.operation;
+            const P0 = UtilGates.ZeroProjector.operation;
+            const P1 = UtilGates.OneProjector.operation;
             /*
             Similar idea as above
             
@@ -69,16 +70,16 @@ export class Circuit {
 
             End combines both
             */
-            let zeroPart = control == 0 ? P0 : IdentityGate.operation;
+            let zeroPart = control == 0 ? P0 : UtilGates.IdentityGate.operation;
             for (let i = 1; i < numQubits; i++) {
                 if (i == control) {
                     zeroPart = TensorProduct(zeroPart, P0);
                 }
                 else {
-                    zeroPart = TensorProduct(zeroPart, IdentityGate.operation);
+                    zeroPart = TensorProduct(zeroPart, UtilGates.IdentityGate.operation);
                 }
             }
-            let onePart = control == 0 ? P1 : IdentityGate.operation;
+            let onePart = control == 0 ? P1 : UtilGates.IdentityGate.operation;
             for (let i = 1; i < numQubits; i++) {
                 if ((i == control) || (isToffoli && i == control2)) {
                     onePart = TensorProduct(onePart, P1);
@@ -87,7 +88,7 @@ export class Circuit {
                     onePart = TensorProduct(onePart, gate.gate.operation);
                 }
                 else {
-                    onePart = TensorProduct(onePart, IdentityGate.operation);
+                    onePart = TensorProduct(onePart, UtilGates.IdentityGate.operation);
                 }
             }
             fullGate = add(zeroPart, onePart);

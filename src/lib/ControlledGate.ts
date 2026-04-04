@@ -1,4 +1,4 @@
-import { Gate, XGate } from "./Gate.js";
+import { Gate } from "./Gate.js";
 import { multiply, type Complex, type ComplexMatrix } from "./Math.js";
 import { Qubit } from "./Qubit.js";
 import { TensorProduct } from "./Tensor.js";
@@ -21,5 +21,3 @@ export class ControlledGate
 }
 
 export type GateLike = Gate | ControlledGate;
-
-export const CNOTGate: ControlledGate = new ControlledGate(XGate.operation)
