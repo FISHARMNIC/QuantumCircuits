@@ -65,7 +65,7 @@ export const generateGrid = () => {
         grid.appendChild(makeRow(y));
     }
 
-    buttons.insertAdjacentHTML('beforeend', `<button onclick='_uiClearActiveGate()'>clear</button>`);
+    buttons.insertAdjacentHTML('beforeend', `<button onclick='_uiClearActiveGate()'>@Remove</button>`);
 
     for(const gateName of Object.keys(Gates))
     {

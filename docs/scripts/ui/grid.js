@@ -50,7 +50,7 @@ export const generateGrid = () => {
     for (let y = 0; y < gridSize.height; y++) {
         grid.appendChild(makeRow(y));
     }
-    buttons.insertAdjacentHTML('beforeend', `<button onclick='_uiClearActiveGate()'>clear</button>`);
+    buttons.insertAdjacentHTML('beforeend', `<button onclick='_uiClearActiveGate()'>@Remove</button>`);
     for (const gateName of Object.keys(Gates)) {
         buttons.insertAdjacentHTML('beforeend', `<button id='${gatNameToId(gateName)}' onclick='_uiSetActiveGate("${gateName}")'>${gateName}</button>`);
     }
