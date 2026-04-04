@@ -99,7 +99,9 @@ export class Circuit {
         }
     }
     run() {
-        outputWrite(`Running gates...\n\n`);
+        outputWrite(`Running gates...\n\n***** Initial state: *****\n\n`);
+        this.initialState.print();
+        outputWrite(`********** END ***********\n\n`);
         let currentState = this.initialState;
         for (let time = 1; time <= this.highestTime; time++) {
             if (!(time in this.gates)) {
