@@ -51,11 +51,11 @@ export class State {
         if (customFormat) {
             possibilities.forEach((p, index) => {
                 const formatted = p.state.arr.map((n, i) => `\n\t${customFormat[i] ?? '?'} = ${n}`);
-                outputWrite(`State #${index} (${p.probability * 100}%):${formatted.join('')}\n\n`);
+                outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):${formatted.join('')}\n\n`);
             });
         }
         else {
-            possibilities.forEach((p, index) => outputWrite(`State #${index} (${p.probability * 100}%):\n\tIn state: ${p.state}\n\n`));
+            possibilities.forEach((p, index) => outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):\n\tIn state: [${p.state}]\n\n`));
         }
     }
 }

@@ -8,8 +8,8 @@ import { outputWrite } from "./lib/Html.js";
 import { State, type StateProbability } from "./lib/State.js";
 
 
-// const result = exampleCircuit.run();
-// result.print();
+const result = exampleCircuit.run();
+result.print();
 
-const result = adderCircuit.run();
-result.print(['A   ', 'B   ', 'Sum ', 'Cout']);
+// const result = adderCircuit.run();
+// result.print(['A   ', 'B   ', 'Sum ', 'Cout']);
