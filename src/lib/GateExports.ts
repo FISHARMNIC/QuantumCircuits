@@ -1,6 +1,6 @@
 import { ControlledGate } from "./ControlledGate.js";
 import { Gate } from "./Gate.js";
-import { i, minus_i } from "./Math.js";
+import { complex, i, minus_i, type Complex } from "./Math.js";
  
 const XGate: Gate = new Gate([
     [0, 1],
@@ -25,12 +25,30 @@ const HadamardGate: Gate = new Gate([
 
 const CNOTGate: ControlledGate = new ControlledGate(XGate.operation);
 
+export const R2Gate = new ControlledGate([
+    [1, 0],
+    [0, complex(Math.cos(2 * Math.PI / 4), Math.sin(2 * Math.PI / 4))]
+] as Complex[][])
+
+export const R3Gate = new ControlledGate([
+    [1, 0],
+    [0, complex(Math.cos(2 * Math.PI / 8), Math.sin(2 * Math.PI / 8))]
+] as Complex[][])
+
+export const R4Gate = new ControlledGate([
+    [1, 0],
+    [0, complex(Math.cos(2 * Math.PI / 16), Math.sin(2 * Math.PI / 16))]
+] as Complex[][])
+
 export const Gates = {
     XGate,
     YGate,
     ZGate,
     HadamardGate,
-    CNOTGate
+    CNOTGate,
+    R2Gate,
+    R3Gate,
+    R4Gate
 };
 
 export const UtilGates = {

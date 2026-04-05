@@ -2,7 +2,7 @@ import { BinaryArray } from "../lib/Binary.js";
 import { Circuit } from "../lib/Circuit.js";
 import { ControlledGate } from "../lib/ControlledGate.js";
 import { Gates } from "../lib/GateExports.js";
-import { genDot, outputClear } from "../lib/Html.js";
+import { allButtons, genDot, outputClear } from "../lib/Html.js";
 import { State } from "../lib/State.js";
 import { gridSize, rowStates, xyToGridId } from "./grid.js";
 export let activeGate = null;
@@ -27,6 +27,9 @@ const uiClearActiveGate = () => {
 };
 const allGates = {};
 const mark_valids = (clear = false) => {
+    allButtons().forEach(e => {
+        e.disabled = !clear;
+    });
     for (let i = 0; i < gridSize.height; i++) {
         document.getElementById(xyToGridId(target.x, i)).classList[clear ? 'remove' : 'add']('valid');
     }
@@ -43,7 +46,7 @@ export const uiClick = (x, y) => {
             }
             else {
                 mark_valids(true);
-                el.innerHTML = genDot(target.y);
+                el.innerHTML = genDot(activeGate, target.y);
                 const info = {
                     gate,
                     target: target.y,
@@ -61,7 +64,7 @@ export const uiClick = (x, y) => {
                 alert('Please select the same time instance (shown in green)');
             }
             else {
-                el.innerHTML = genDot(target.y);
+                el.innerHTML = genDot(activeGate, target.y);
                 const isTuffoli = prompt('Tuffoli? (y/n)', 'y') == 'y';
                 if (isTuffoli) // user wants second control
                  {
@@ -85,7 +88,8 @@ export const uiClick = (x, y) => {
     }
     else {
         if (activeGate) {
-            el.innerHTML = `<div class="box">${activeGate[0]}</div><hr>`;
+            const isRGate = activeGate[0] == 'R';
+            el.innerHTML = `<div class="${isRGate ? "circle" : "box"}">${isRGate ? activeGate.slice(0, 2) : activeGate[0]}</div><hr>`;
             if (gate instanceof ControlledGate) {
                 nextClickIsControl = 1;
                 target.y = y;

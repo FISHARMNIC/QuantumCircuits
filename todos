@@ -1,1 +1,5 @@
 Allow inputing probabilities (works backend via state constructor, but needs frontend implementation)
+
+Add button to measure and collapse to see entanglement (use rng to pick)
+
+add swap "gate"

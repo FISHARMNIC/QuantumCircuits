@@ -2,7 +2,7 @@ import { BinaryArray } from "../lib/Binary.js";
 import { Circuit, type CircuitGate } from "../lib/Circuit.js";
 import { ControlledGate, type GateLike } from "../lib/ControlledGate.js";
 import { Gates } from "../lib/GateExports.js";
-import { genDot, outputClear } from "../lib/Html.js";
+import { allButtons, genDot, outputClear } from "../lib/Html.js";
 import { State } from "../lib/State.js";
 import { gridSize, rowStates, xyToGridId } from "./grid.js";
 
@@ -12,7 +12,7 @@ export const gatNameToId = (name: string): string => `gate_${name}`;
 
 let nextClickIsControl: number = 0;
 
-let target: {x: number, y: number} = {x: 0, y: 0};
+let target: { x: number, y: number } = { x: 0, y: 0 };
 let control1: number = 0;
 
 const uiSetActiveGate = (name: string): void => {
@@ -38,6 +38,10 @@ const uiClearActiveGate = (): void => {
 const allGates: Record<string, { time: number, info: CircuitGate } | null> = {};
 
 const mark_valids = (clear: boolean = false): void => {
+    allButtons().forEach(e => {
+        e.disabled = !clear;
+    });
+
     for (let i = 0; i < gridSize.height; i++) {
         document.getElementById(xyToGridId(target.x, i))!.classList[clear ? 'remove' : 'add']('valid');
     }
@@ -61,7 +65,7 @@ export const uiClick = (x: number, y: number): void => {
             else {
                 mark_valids(true);
 
-                el.innerHTML = genDot(target.y);
+                el.innerHTML = genDot(activeGate!, target.y);
 
                 const info: CircuitGate = {
                     gate,
@@ -83,7 +87,7 @@ export const uiClick = (x: number, y: number): void => {
             }
 
             else {
-                el.innerHTML = genDot(target.y);
+                el.innerHTML = genDot(activeGate!, target.y);
 
                 const isTuffoli = prompt('Tuffoli? (y/n)', 'y') == 'y';
 
@@ -112,7 +116,9 @@ export const uiClick = (x: number, y: number): void => {
     }
     else {
         if (activeGate) {
-            el.innerHTML = `<div class="box">${activeGate[0]}</div><hr>`;
+            const isRGate = activeGate[0] == 'R';
+
+            el.innerHTML = `<div class="${isRGate ? "circle" : "box"}">${isRGate ? activeGate.slice(0, 2) : activeGate[0]}</div><hr>`;
 
             if (gate instanceof ControlledGate) {
                 nextClickIsControl = 1;
@@ -163,9 +169,8 @@ export const uiRun = () => {
 
 export const uiHandleRemove = () => {
     Object.entries(allGates).forEach(e => {
-        
-        if(!e[0] || !e[1])
-        {
+
+        if (!e[0] || !e[1]) {
             return;
         }
 

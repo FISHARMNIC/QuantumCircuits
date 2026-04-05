@@ -31,6 +31,7 @@ export class State {
         this.vector.forEach((amplitude, index) => {
             ret.push({
                 probability: abs(amplitude) ** 2,
+                phase: Math.atan2(amplitude.im, amplitude.re),
                 state: BinaryArray.fromNumber(index, this.numQubits)
             });
         });
@@ -51,11 +52,11 @@ export class State {
         if (customFormat) {
             possibilities.forEach((p, index) => {
                 const formatted = p.state.arr.map((n, i) => `\n\t${customFormat[i] ?? '?'} = ${n}`);
-                outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):${formatted.join('')}\n\n`);
+                outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%), Phase: [${((p.phase) / Math.PI).toFixed(5)}π]:${formatted.join('')}\n\n`);
             });
         }
         else {
-            possibilities.forEach((p, index) => outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):\n\tIn state: [${p.state}]\n\n`));
+            possibilities.forEach((p, index) => outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):\n\tPhase: [${((p.phase) / Math.PI).toFixed(5)}π]\n\tIn state: [${p.state}]\n\n`));
         }
     }
 }
