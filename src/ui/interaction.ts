@@ -58,14 +58,14 @@ export const uiClick = (x: number, y: number): void => {
         if (nextClickIsControl == 2) // selecting second control
         {
 
-            if (target.x != x) {
-                alert('Please select the same time instance (shown in green)');
+            if (target.x != x || target.y == y) {
+                alert('Please select the same time instance (shown in green) and a different square');
             }
 
             else {
                 mark_valids(true);
 
-                el.innerHTML = genDot(activeGate!, target.y);
+                el.innerHTML = genDot(activeGate!, target.y, y);
 
                 const info: CircuitGate = {
                     gate,
@@ -82,12 +82,12 @@ export const uiClick = (x: number, y: number): void => {
         }
         else // selecting target.y
         {
-            if (target.x != x) {
-                alert('Please select the same time instance (shown in green)');
+            if (target.x != x || target.y == y) {
+                alert('Please select the same time instance (shown in green) and a different square');
             }
 
             else {
-                el.innerHTML = genDot(activeGate!, target.y);
+                el.innerHTML = genDot(activeGate!, target.y, y);
 
                 const isTuffoli = prompt('Tuffoli? (y/n)', 'y') == 'y';
 
@@ -118,7 +118,7 @@ export const uiClick = (x: number, y: number): void => {
         if (activeGate) {
             const isRGate = activeGate[0] == 'R';
 
-            el.innerHTML = `<div class="${isRGate ? "circle" : "box"}">${isRGate ? activeGate.slice(0, 2) : activeGate[0]}</div><hr>`;
+            el.innerHTML = `<div class="${isRGate ? "circle" : "box"}"><p>${isRGate ? activeGate.slice(0, 2) : activeGate[0]}<p></div><hr>`;
 
             if (gate instanceof ControlledGate) {
                 nextClickIsControl = 1;

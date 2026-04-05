@@ -16,7 +16,7 @@ export class State {
 
     /**
      * 
-     * @param amplitudes (number? -> initialize n bits to 0) (BinaryArray? -> size bits to value) (ComplexVector? Raw probabilities MUST BE NORMALIZED)
+     * @param amplitudes (number? -> initialize n bits to 0) (BinaryArray? -> size bits to value) (ComplexVector? Raw amplitudes MUST BE NORMALIZED)
      */
     constructor(amplitudes: ComplexVector | number | BinaryArray) {
         if (typeof amplitudes == 'number') {
