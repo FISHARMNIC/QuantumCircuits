@@ -3,7 +3,7 @@
     --color-circ: #EDF3DF;
     --color-box: #E6EBF4;
 
-     --color-circ2: #A5C05A;
+    --color-circ2: #A5C05A;
     --color-box2: #6385B7;
 }
 
@@ -25,6 +25,7 @@ table {
     border-collapse: collapse;
     /* width: var(--wid); */
 }
+
 td {
     width: 80px;
     height: 80px;
@@ -109,7 +110,7 @@ button {
     padding: 6px 16px;
     background-color: white;
     border: 1px solid #aaa;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 20px;
     transition: 100ms;
@@ -183,17 +184,24 @@ button:hover {
     box-sizing: border-box;
     display: flex;
     /* align-items: center; */
-    justify-content: flex-start; /* was center */
+    justify-content: flex-start;
+    /* was center */
     gap: 20px;
     overflow-x: auto;
     /* border: 1px solid white; */
-    filter: drop-shadow(0px 0px 4px black);
+    filter: none;
+    transition: transform 400ms, filter 400ms;
 }
 
+.wrapper:hover
+{
+    transform: scale(1.005);
+    filter: drop-shadow(0px 0px 4px black);;
+}
 .two {
     background-color: lightgrey;
-        font-size: x-large !important;
-        margin-top: 30px;
+    font-size: x-large !important;
+    margin-top: 30px;
 }
 
 .valid {
@@ -233,9 +241,11 @@ button:hover {
     border-radius: 10px;
 }
 
-h1, h2, figcaption, h3
-{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+h1,
+h2,
+figcaption,
+h3 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
 }
 
@@ -263,15 +273,39 @@ figure {
     top: 0px;
 }
 
-input
-{
-    border-radius: 10px;
-    width: 75%;
-    height: 40px;
-    align-self: center;
+input[type="text"] {
+    width: 100vw;
+    height: 50%;
+}
+
+input[type="checkbox"] {
+    appearance: block;
+    width: 10vw;
+    height: 50%;
+    border: 1px solid #aaa;
 }
 
 p {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: x-large;
+}
+
+.grouped {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    background-color: rgb(128, 181, 199);
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 96%;
+}
+
+.header p {
+    font-size: medium;
+    align-content: center;
+    justify-content: center;
+    background-color: rgb(128, 181, 199);
+    padding: 10px;
+    border-radius: 10px;
 }

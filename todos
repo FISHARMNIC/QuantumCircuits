@@ -1,5 +1,9 @@
-Allow inputing probabilities (works backend via state constructor, but needs frontend implementation)
-
 Add button to measure and collapse to see entanglement (use rng to pick)
 
 add swap "gate"
+
+disable ket buttons when in probabilities mode
+
+more user friendly output display, maybe allows user to hover over state and shows phase and probability
+
+anti control for grovers search

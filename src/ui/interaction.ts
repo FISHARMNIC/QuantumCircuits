@@ -2,7 +2,8 @@ import { BinaryArray } from "../lib/Binary.js";
 import { Circuit, type CircuitGate } from "../lib/Circuit.js";
 import { ControlledGate, type GateLike } from "../lib/ControlledGate.js";
 import { Gates } from "../lib/GateExports.js";
-import { allButtons, genDot, outputClear } from "../lib/Html.js";
+import { allButtons, enableProbs, genDot, outputClear } from "../lib/Html.js";
+import { inputProbabilities } from "../lib/Settings.js";
 import { State } from "../lib/State.js";
 import { gridSize, rowStates, xyToGridId } from "./grid.js";
 
@@ -117,8 +118,9 @@ export const uiClick = (x: number, y: number): void => {
     else {
         if (activeGate) {
             const isRGate = activeGate[0] == 'R';
+            const isCGate = activeGate[0] == 'C';
 
-            el.innerHTML = `<div class="${isRGate ? "circle" : "box"}"><p>${isRGate ? activeGate.slice(0, 2) : activeGate[0]}<p></div><hr>`;
+            el.innerHTML = `<div class="${isRGate ? "circle" : "box"}"><p>${isRGate || isCGate ? activeGate.slice(0, 2) : activeGate[0]}<p></div><hr>`;
 
             if (gate instanceof ControlledGate) {
                 nextClickIsControl = 1;
@@ -149,10 +151,18 @@ export const uiClick = (x: number, y: number): void => {
 
 export const uiRun = () => {
 
-    console.log(allGates);;
+    console.log(allGates);
 
-    const input = new State(new BinaryArray(rowStates));
+    if(enableProbs.checked && inputProbabilities.length != 2 ** gridSize.height)
+    {
+        alert(`Error! Grid is of size [${2 ** gridSize.height}] but was given [${inputProbabilities.length}] probabilities. Please provide [2 ^ (#qubits=${gridSize.height}) = ${2 ** gridSize.height}]`);
+        return;
+    }
+
+    const input = new State(enableProbs.checked ? inputProbabilities : new BinaryArray(rowStates));
     const circuit = new Circuit(input);
+
+    console.log(input)
 
     for (const gate of Object.values(allGates)) {
         if (gate) {

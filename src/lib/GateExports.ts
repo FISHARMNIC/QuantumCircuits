@@ -24,21 +24,24 @@ const HadamardGate: Gate = new Gate([
 ]);
 
 const CNOTGate: ControlledGate = new ControlledGate(XGate.operation);
+export const CZGate = new ControlledGate(ZGate.operation);
+export const CYGate = new ControlledGate(YGate.operation);
 
 export const R2Gate = new ControlledGate([
     [1, 0],
     [0, complex(Math.cos(2 * Math.PI / 4), Math.sin(2 * Math.PI / 4))]
-] as Complex[][])
+] as Complex[][]);
 
 export const R3Gate = new ControlledGate([
     [1, 0],
     [0, complex(Math.cos(2 * Math.PI / 8), Math.sin(2 * Math.PI / 8))]
-] as Complex[][])
+] as Complex[][]);
 
 export const R4Gate = new ControlledGate([
     [1, 0],
     [0, complex(Math.cos(2 * Math.PI / 16), Math.sin(2 * Math.PI / 16))]
-] as Complex[][])
+] as Complex[][]);
+
 
 export const Gates = {
     XGate,
@@ -46,6 +49,8 @@ export const Gates = {
     ZGate,
     HadamardGate,
     CNOTGate,
+    CZGate,
+    CYGate,
     R2Gate,
     R3Gate,
     R4Gate

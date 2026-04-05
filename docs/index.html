@@ -15,31 +15,41 @@
 <body>
 
     <h1> Quantum Circuit Simulator</h1>
+    <p style="margin-top: 0px;">Nicolas Quijano 2026</p>
+    <br>
+    <div class="header wrapper">
+    <p>Click on a gate to select then place it in the circuit. Use "@Remove" to get rid of a gate</p>
+    <p>Click on the qubits on the left to change the initial state</p>
+    <p>Use the toggle next to "Amplitudes" to provide custom amplitudes</p>
+    <p>Use "+" and "-" to add more qubits</p>
+    </div>
     <br>
 
     <div class="wrapper" style="padding-bottom: 50px; margin-bottom: 10px;">
         <table id="grid"></table>
-       
+
         <div class="row-controls">
             <button onclick="_addRow()">+</button>
             <button onclick="_removeRow()">-</button>
         </div>
 
-        
-    </div>
 
-  
+    </div>
 
     <br>
 
     <div id="buttons" class="wrapper"></div>
 
     <br>
-<!-- 
+
     <div class="wrapper">
-        <h3>Enable Probabilities</h3>
-        <input type='checkbox'>
-    </div> -->
+        <div class="grouped">
+            <h3>Amplitudes</h3>
+            <input type="checkbox" id="enableProbs">
+            <input type='text' id="probsInput" disabled
+                value="[..._times(3, divide(minus_i, sqrt(24))), ..._times(4, sqrt(7/40)), sqrt(-7/40)]">
+        </div>
+    </div>
 
     <br>
 
@@ -49,10 +59,10 @@
 
     <pre id="output" class="wrapper two">Waiting...</pre>
 
-  
+
     <h2>Example Circuits:</h2>
     <div class="wrapper">
-          
+
         <figure>
             <img src="images/adder.png">
             <figcaption>Full Adder</figcaption>
@@ -68,6 +78,10 @@
         <figure>
             <img src="images/qft.png">
             <figcaption>Fourier Transform</figcaption>
+        </figure>
+        <figure>
+            <img src="images/grover.jpg">
+            <figcaption>Grovers Search</figcaption>
         </figure>
     </div>
 </body>
