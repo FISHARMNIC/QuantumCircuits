@@ -61,7 +61,7 @@ export class State {
         }
     }
 
-    public print(customFormat?: string[]): void {
+    public print(start: boolean = false, customFormat?: string[]): void {
         const probabilities = this.getProbabilities();
         const possibilities = probabilities.filter((p: StateProbability) => p.probability != 0);
 
@@ -72,7 +72,17 @@ export class State {
             });
         }
         else {
-            possibilities.forEach((p: StateProbability, index) => outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):\n\tPhase: [${((p.phase) / Math.PI).toFixed(5)}π]\n\tIn state: [${p.state}]\n\n`));
+            // possibilities.forEach((p: StateProbability, index) => outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):\n\tPhase: [${((p.phase) / Math.PI).toFixed(5)}π]\n\tIn state: [${p.state}]\n\n`));
+        
+            possibilities.forEach((p: StateProbability, index) => {
+                const percent = (p.probability * 100).toFixed(3) + '%';
+                const phase = ((p.phase) / Math.PI).toFixed(3) + 'π';
+                const state = p.state;
+
+                outputWrite(`<div class='g2'>${start? "<div class='info infoA'>(Initial)</div>" : ''}<div class='info infoA'>P = ${percent}\n</div><div class='info infoB'>State: |${state}⟩</div><div class='info infoC'>Phase: ${phase}</div></div>${start? '<br>': ''}`, start);
+
+                // outputWrite(`State #${index} P = (${(p.probability * 100).toFixed(5)}%):\n\tPhase: [${((p.phase) / Math.PI).toFixed(5)}π]\n\tIn state: [${p.state}]\n\n`)
+            });
         }
     }
 }

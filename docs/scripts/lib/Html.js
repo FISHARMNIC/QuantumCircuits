@@ -1,9 +1,11 @@
 const outputHtml = document.getElementById('output');
+const outputHtml2 = document.getElementById('output2');
 outputHtml.onclick = (e) => e.stopPropagation();
+outputHtml2.onclick = (e) => e.stopPropagation();
 export const grid = document.getElementById('grid');
 export const buttons = document.getElementById('buttons');
-export const outputClear = () => void (outputHtml.innerText = '');
-export const outputWrite = (s) => outputHtml.insertAdjacentText('beforeend', s);
+export const outputClear = () => { outputHtml.innerHTML = '<div class="wrapper dark">Output State</div>'; outputHtml2.innerHTML = '<div class="wrapper dark">Input State</div>'; };
+export const outputWrite = (s, second = false) => second ? outputHtml2.insertAdjacentHTML('beforeend', s) : outputHtml.insertAdjacentHTML('beforeend', s);
 export const genDot = (gateName, target_y, current_y) => {
     const isR = gateName[0] == 'R';
     const isC = gateName[0] == 'C';

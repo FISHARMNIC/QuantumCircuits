@@ -2,15 +2,17 @@ import type { Bit } from "./Binary";
 import type { Complex } from "./Math";
 
 const outputHtml = document.getElementById('output') as HTMLPreElement;
+const outputHtml2 = document.getElementById('output2') as HTMLPreElement;
 
 outputHtml.onclick = (e) => e.stopPropagation();
+outputHtml2.onclick = (e) => e.stopPropagation();
 
 export const grid = document.getElementById('grid') as HTMLTableElement;
 export const buttons = document.getElementById('buttons') as HTMLDivElement;
 
-export const outputClear = (): void => void(outputHtml.innerText = '');
+export const outputClear = (): void => {outputHtml.innerHTML = '<div class="wrapper dark">Output State</div>'; outputHtml2.innerHTML = '<div class="wrapper dark">Input State</div>'}
 
-export const outputWrite = (s: string): void => outputHtml.insertAdjacentText('beforeend', s);
+export const outputWrite = (s: string, second: boolean = false): void => second? outputHtml2.insertAdjacentHTML('beforeend', s) : outputHtml.insertAdjacentHTML('beforeend', s);
 
 export const genDot = (gateName: string, target_y: number, current_y: number): string => {
     const isR = gateName[0] == 'R';

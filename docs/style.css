@@ -198,10 +198,16 @@ button:hover {
     transform: scale(1.005);
     filter: drop-shadow(0px 0px 4px black);;
 }
+
 .two {
     background-color: lightgrey;
     font-size: x-large !important;
     margin-top: 30px;
+    white-space: normal;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-width: 0;
 }
 
 .valid {
@@ -301,6 +307,18 @@ p {
     width: 96%;
 }
 
+.dark {
+    background-color: rgb(128, 181, 199);
+}
+
+.g2 {
+    background-color: rgb(41, 106, 128);
+    border-radius: 20px;
+    padding: 10px;
+    flex: 1;
+    transition: 400ms;
+}
+
 .header p {
     font-size: medium;
     align-content: center;
@@ -308,4 +326,34 @@ p {
     background-color: rgb(128, 181, 199);
     padding: 10px;
     border-radius: 10px;
+}
+
+.info {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: rgb(128, 181, 199);
+}
+
+.g2:hover {
+    transform: scale(1.01);
+    filter: drop-shadow(0px 0px 4px black);;
+}
+
+.g3:hover {
+    transform: scale(1.01);
+    filter: drop-shadow(0px 0px 4px black);;
+}
+
+
+.infoA {
+    /* background-color: #7FB5C6; */
+}
+
+.infoB {
+    /* background-color: blue; */
+}
+
+.infoC {
+    /* background-color: blue; */
 }
